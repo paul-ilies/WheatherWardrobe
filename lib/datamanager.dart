@@ -7,7 +7,7 @@ class DataManager {
   WeatherData? _weatherData;
 
   Future<void> fetchWeather() async {
-    const apiKey = '7cc93466542c456c968110302231109';
+    String apiKey = const String.fromEnvironment("API_KEY");
     Map<String, double> locationData = await getLocation();
     double? latitude = locationData['latitude'];
     double? longitude = locationData['longitude'];
