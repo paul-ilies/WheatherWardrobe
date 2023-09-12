@@ -21,11 +21,48 @@ class Home extends StatelessWidget {
               snapshot.data?.current != null) {
             var temperature = snapshot.data?.current!.tempC?.round();
             var city = snapshot.data?.location!.name;
-            return Column(
-              children: [
-                Text("$temperature °C"),
-                Text("$city"),
-              ],
+            var wheatherIcon =
+                snapshot.data?.current!.condition!.icon as String;
+            var wheatherCondition =
+                snapshot.data?.current!.condition!.text as String;
+            return SizedBox(
+              // color: Colors.blue,
+              height: double.infinity,
+              width: double.infinity,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("images/blue-sky.jpg"),
+                        fit: BoxFit.cover)),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network("https:$wheatherIcon"),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          wheatherCondition,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "$temperature °C",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      Text(
+                        "$city",
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
 
