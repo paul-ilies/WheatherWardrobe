@@ -1,43 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:wheather_wardrobe/datamanager.dart';
+import 'package:wheather_wardrobe/datamodel.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  final DataManager dataManager;
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  late double lat = 0;
-  late double long = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    getLocation();
-  }
-
-  void getLocation() async {
-    var location = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
-    lat = location.latitude;
-    long = location.longitude;
-    setState(() {});
-  }
+  const Home({Key? key, required this.dataManager}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "Latitude: $lat",
-          textAlign: TextAlign.left,
-        ),
-        Text("Longitude: $long", textAlign: TextAlign.left),
-      ],
+    return FutureBuilder<WeatherData>(
+      future: dataManager.getWeather(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError || snapshot.data == null) {
+          return const Text("Error: Weather data not available");
+        } else {
+          if (snapshot.data?.location != null ||
+              snapshot.data?.current != null) {
+            var temperature = snapshot.data?.current!.tempC?.round();
+            var city = snapshot.data?.location!.name;
+            return Column(
+              children: [
+                Text("$temperature °C"),
+                Text("$city"),
+              ],
+            );
+          }
+
+          return const Text("Not found");
+        }
+      },
     );
   }
 }

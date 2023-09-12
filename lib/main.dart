@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheather_wardrobe/datamanager.dart';
 import 'package:wheather_wardrobe/pages/home.dart';
 
 void main() {
@@ -28,6 +29,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var dataManager = DataManager();
   var selectedIndex = 0;
 
   @override
@@ -35,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     Widget currentWidgetPage = const Text("Error");
     switch (selectedIndex) {
       case 0:
-        currentWidgetPage = const Home();
+        currentWidgetPage = Home(dataManager: dataManager);
         break;
       case 1:
         currentWidgetPage = const Text("Menu");
