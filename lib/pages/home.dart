@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wheather_wardrobe/datamanager.dart';
 import 'package:wheather_wardrobe/datamodel.dart';
 
@@ -59,6 +62,10 @@ class Home extends StatelessWidget {
                         "$city",
                         style: const TextStyle(color: Colors.white),
                       ),
+                      DisplayProducts(
+                        currentCondition: wheatherCondition,
+                        dataManager: dataManager,
+                      )
                     ],
                   ),
                 ),
@@ -70,5 +77,81 @@ class Home extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class DisplayProducts extends StatefulWidget {
+  final String currentCondition;
+  final DataManager dataManager;
+  const DisplayProducts(
+      {Key? key, required this.currentCondition, required this.dataManager})
+      : super(key: key);
+
+  @override
+  State<DisplayProducts> createState() => _DisplayProductsState();
+}
+
+class _DisplayProductsState extends State<DisplayProducts> {
+  var _products;
+  var _conditions;
+  late List<dynamic> _data = [];
+
+  Future<String> loadJsonFile(String path) async {
+    return await rootBundle.loadString(path);
+  }
+
+  Future<void> fetchConditions() async {
+    final String jsonString = await loadJsonFile('assets/conditions.json');
+    var data = jsonDecode(jsonString);
+    setState(() {
+      _conditions = data;
+    });
+  }
+
+  Future<void> fetchProducts() async {
+    final String jsonString = await loadJsonFile('assets/items.json');
+    var data = jsonDecode(jsonString);
+    setState(() {
+      _products = data;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchConditions();
+    fetchProducts();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String currentCondition = widget.currentCondition;
+    List<String> conditions = ["sunny", "rain", "snow", "frozen"];
+    if (_products != null && _conditions != null) {
+      for (var i = 0; i < conditions.length; i++) {
+        if (_conditions[conditions[i]] != null &&
+            _conditions[conditions[i]].contains(currentCondition)) {
+          setState(() {
+            _data = _products[conditions[i]] ?? [];
+          });
+        }
+      }
+    }
+    if (_data.isNotEmpty) {
+      return Container(
+        height: 200,
+        child: ListView.builder(
+          itemCount: _data.length,
+          itemBuilder: (context, index) {
+            var product = _data[index];
+
+            return ListTile(
+              title: Text(product["item"]),
+            );
+          },
+        ),
+      );
+    }
+    return const CircularProgressIndicator();
   }
 }

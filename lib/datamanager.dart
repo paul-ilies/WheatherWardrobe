@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wheather_wardrobe/datamodel.dart';
-import 'package:wheather_wardrobe/fetchproducts.dart';
 import 'package:wheather_wardrobe/location.dart';
 
 class DataManager {
@@ -12,10 +11,6 @@ class DataManager {
     Map<String, double> locationData = await getLocation();
     double? latitude = locationData['latitude'];
     double? longitude = locationData['longitude'];
-    Map<String, dynamic> products = await fetchProducts();
-    Map<String, dynamic> conditions = await fetchConditions();
-
-    print(conditions);
 
     String locationQuery = '$latitude,$longitude';
     final url =
@@ -30,9 +25,7 @@ class DataManager {
         var decodedData = jsonDecode(body);
 
         if (decodedData != null) {
-          _weatherData = WeatherData();
           _weatherData = WeatherData.fromJson(decodedData);
-          print(_weatherData);
         }
       } else {
         print('Request failed with status: ${response.statusCode}');
