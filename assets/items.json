@@ -1,0 +1,59 @@
+{
+    "sunny": [
+      {
+        "item": "Sunglasses",
+        "image_url": "/images/sunglasses.jpg"
+      },
+      {
+        "item": "Sunscreen",
+        "image_url": "/images/sunscreen.jpg"
+      },
+      {
+        "item": "Sunhat",
+        "image_url": "/images/sunhat.jpg"
+      }
+    ],
+    "rain": [
+      {
+        "item": "Umbrella",
+        "image_url": "/images/umbrella.jpg"
+      },
+      {
+        "item": "Raincoat",
+        "image_url": "/images/raincoat.jpg"
+      },
+      {
+        "item": "Waterproof boots",
+        "image_url": "/images/waterproof-boots.jpg"
+      }
+    ],
+    "snow": [
+      {
+        "item": "Winter coat",
+        "image_url": "/images/winter-coat.jpg"
+      },
+      {
+        "item": "Snow boots",
+        "image_url": "/images/snow-boots.jpg"
+      },
+      {
+        "item": "Scarves and gloves",
+        "image_url": "/images/insulated-gloves.jpg"
+      }
+    ],
+    "frozen": [
+      {
+        "item": "Thermal jacket",
+        "image_url": "/images/thermal-jacket.jpg"
+      },
+      {
+        "item": "Insulated gloves",
+        "image_url": "/images/insulated-gloves.jpg"
+      },
+      {
+        "item": "Fleece-lined hat",
+        "image_url": "/images/fleece-lined-hat.jpg"
+      }
+    ]
+  }
+  

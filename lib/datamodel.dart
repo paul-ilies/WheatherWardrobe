@@ -136,3 +136,15 @@ class Condition {
     code = json['code'];
   }
 }
+
+class Product {
+  String? item;
+  String? imageUrl;
+
+  Product({required this.item, required this.imageUrl});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    item = json["item"];
+    imageUrl = json["image_url"];
+  }
+}
