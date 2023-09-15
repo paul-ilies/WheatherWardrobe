@@ -92,9 +92,11 @@ class DisplayProducts extends StatefulWidget {
 }
 
 class _DisplayProductsState extends State<DisplayProducts> {
+  // ignore: prefer_typing_uninitialized_variables
   var _products;
+  // ignore: prefer_typing_uninitialized_variables
   var _conditions;
-  late List<dynamic> _data = [];
+  late final List<dynamic> _data = [];
 
   Future<String> loadJsonFile(String path) async {
     return await rootBundle.loadString(path);
@@ -131,24 +133,35 @@ class _DisplayProductsState extends State<DisplayProducts> {
       for (var i = 0; i < conditions.length; i++) {
         if (_conditions[conditions[i]] != null &&
             _conditions[conditions[i]].contains(currentCondition)) {
-          setState(() {
-            _data = _products[conditions[i]] ?? [];
-          });
+          _data.add(_products[conditions[i]]);
         }
       }
     }
     if (_data.isNotEmpty) {
-      return Container(
-        height: 200,
-        child: ListView.builder(
-          itemCount: _data.length,
-          itemBuilder: (context, index) {
-            var product = _data[index];
-
-            return ListTile(
-              title: Text(product["item"]),
-            );
-          },
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _data[0].length, // Horizontal scroll
+              itemBuilder: (context, index) {
+                var product = _data[0][index];
+                return Card(
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          product["image_url"],
+                          width: 200,
+                          height: 100,
+                        ),
+                      ),
+                      Text(product["item"]),
+                    ],
+                  ),
+                );
+              }),
         ),
       );
     }

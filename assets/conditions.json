@@ -1,7 +1,8 @@
 {
     "sunny": [
       "Sunny",
-      "Partly cloudy"
+      "Partly cloudy",
+      "Overcast"
     ],
     "rain": [
       "Patchy rain possible",
