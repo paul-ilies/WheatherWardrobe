@@ -16,7 +16,12 @@ class Home extends StatelessWidget {
       future: dataManager.getWeather(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(
+            child: SizedBox(
+                height: 50.00,
+                width: 50.00,
+                child: CircularProgressIndicator()),
+          );
         } else if (snapshot.hasError || snapshot.data == null) {
           return const Text("Error: Weather data not available");
         } else {
@@ -29,7 +34,6 @@ class Home extends StatelessWidget {
             var wheatherCondition =
                 snapshot.data?.current!.condition!.text as String;
             return SizedBox(
-              // color: Colors.blue,
               height: double.infinity,
               width: double.infinity,
               child: Container(
@@ -144,21 +148,30 @@ class _DisplayProductsState extends State<DisplayProducts> {
           height: 200,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: _data[0].length, // Horizontal scroll
+              itemCount: _data[0].length,
               itemBuilder: (context, index) {
                 var product = _data[0][index];
-                return Card(
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          product["image_url"],
-                          width: 200,
-                          height: 100,
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: Image.asset(
+                            product["image_url"],
+                            fit: BoxFit.cover,
+                            width: 200,
+                            height: 100,
+                          ),
                         ),
-                      ),
-                      Text(product["item"]),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(product["item"]),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }),

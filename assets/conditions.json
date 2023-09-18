@@ -1,8 +1,7 @@
 {
     "sunny": [
       "Sunny",
-      "Partly cloudy",
-      "Overcast"
+      "Partly cloudy"
     ],
     "rain": [
       "Patchy rain possible",
@@ -18,7 +17,8 @@
       "Moderate or heavy rain shower",
       "Torrential rain shower",
       "Patchy light rain with thunder",
-      "Moderate or heavy rain with thunder"
+      "Moderate or heavy rain with thunder",
+      "Overcast"
     ],
     "snow": [
       "Patchy snow possible",
